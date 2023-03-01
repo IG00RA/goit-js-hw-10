@@ -11,8 +11,21 @@ const refs = {
 refs.startBtn.addEventListener('click', onStartBtnClick);
 refs.stopBtn.addEventListener('click', onStopBtnClick);
 
-function onStartBtnClick(e) {
-  const backgroundColor = getRandomHexColor();
-  refs.body.style.backgroundColor = backgroundColor;
+let switcherID;
+
+function onStartBtnClick() {
+  if (refs.body.classList.contains('cls')) {
+    return;
+  }
+
+  refs.body.classList.add('cls');
+
+  switcherID = setInterval(() => {
+    backgroundColor = getRandomHexColor();
+    refs.body.style.backgroundColor = backgroundColor;
+  }, 1000);
 }
-function onStopBtnClick(e) {}
+function onStopBtnClick() {
+  clearInterval(switcherID);
+  refs.body.classList.remove('cls');
+}

@@ -11,9 +11,12 @@ const refs = {
 refs.startBtn.addEventListener('click', onStartBtnClick);
 refs.stopBtn.addEventListener('click', onStopBtnClick);
 
+refs.stopBtn.disabled = true;
 let switcherID;
 
 function onStartBtnClick() {
+  refs.stopBtn.disabled = false;
+  refs.startBtn.disabled = true;
   if (refs.body.classList.contains('cls')) {
     return;
   }
@@ -28,4 +31,6 @@ function onStartBtnClick() {
 function onStopBtnClick() {
   clearInterval(switcherID);
   refs.body.classList.remove('cls');
+  refs.stopBtn.disabled = true;
+  refs.startBtn.disabled = false;
 }

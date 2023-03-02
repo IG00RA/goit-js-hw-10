@@ -24,7 +24,7 @@ function onStartBtnClick() {
   refs.body.classList.add('cls');
 
   switcherID = setInterval(() => {
-    backgroundColor = getRandomHexColor();
+    const backgroundColor = getRandomHexColor();
     refs.body.style.backgroundColor = backgroundColor;
   }, 1000);
 }
@@ -34,3 +34,5 @@ function onStopBtnClick() {
   refs.stopBtn.disabled = true;
   refs.startBtn.disabled = false;
 }
+
+console.log(3213);

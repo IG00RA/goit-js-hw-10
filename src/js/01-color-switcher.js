@@ -34,5 +34,3 @@ function onStopBtnClick() {
   refs.stopBtn.disabled = true;
   refs.startBtn.disabled = false;
 }
-
-console.log(3213);

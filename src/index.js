@@ -1,4 +1,5 @@
 import debounce from 'lodash.debounce';
+import { Loading } from 'notiflix';
 import './css/styles.css';
 import { fetchCountries } from './js/fetchCountries';
 const DEBOUNCE_DELAY = 300;
@@ -40,5 +41,10 @@ const renderList = data => {
 function onInputChange(e) {
   const userInput = e.target.value.trim();
   e.target.value = userInput;
-  fetchCountries(userInput, renderItem, renderList);
+  if (e.target.value.length > 0) {
+    fetchCountries(userInput, renderItem, renderList);
+  }
+  if (e.target.value.length === 0) {
+    refs.list.innerHTML = '';
+  }
 }

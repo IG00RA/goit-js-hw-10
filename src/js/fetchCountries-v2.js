@@ -1,7 +1,7 @@
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 export function fetchCountries(userInput, renderItem, renderList) {
   fetch(
-    `https://restcountries.com/v3.1/name/${userInput}?fields=name,capital,population,flags,languages`
+    `https://restcountries.com/v2/name/${userInput}?fields=name,capital,population,flag,languages`
   )
     .then(res => {
       if (res.ok) {
@@ -22,12 +22,9 @@ export function fetchCountries(userInput, renderItem, renderList) {
           );
         }
         if (data.length === 1) {
-          const languages = data.map(d => d.languages);
-          const lang = [];
-          for (const el of languages) {
-            lang.push(Object.values(el));
-          }
-          const language = lang.join(',').split(',').join(', ');
+          const language = data.map(d =>
+            d.languages.map(language => language.name)
+          );
           return renderItem(data, language);
         }
 

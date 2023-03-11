@@ -1,4 +1,5 @@
 import debounce from 'lodash.debounce';
+import { Loading } from 'notiflix';
 import './css/styles.css';
 import { fetchCountries } from './js/fetchCountries';
 const DEBOUNCE_DELAY = 300;
@@ -14,8 +15,8 @@ refs.input.addEventListener('input', debounce(onInputChange, DEBOUNCE_DELAY));
 const renderItem = (data, language) => {
   const item = data
     .map(
-      ({ flags, name, capital, population }) =>
-        `<li style="display: flex"><img src="${flags.svg}" alt="${name.official}" width="50px" height="40px"><h2 class="country-name"> ${name.official}</h2></li>
+      ({ flag, name, capital, population }) =>
+        `<li style="display: flex"><img src="${flag}" alt="${name}" width="50px" height="40px"><h2 class="country-name"> ${name}</h2></li>
                 <li><b>Capital:</b> ${capital}</li>
                 <li><b>Population:</b> ${population}</li>
                 <li><b>Languages:</b> ${language}</li>
@@ -29,8 +30,8 @@ const renderItem = (data, language) => {
 const renderList = data => {
   const list = data
     .map(
-      ({ flags, name }) =>
-        `<li style="display: flex;font-size: x-large;align-items: center"><img src="${flags.svg}" alt="${name.official}" width="50px" height="40px"><p class="country-name"> ${name.official}</p></li>`
+      ({ flag, name }) =>
+        `<li style="display: flex;font-size: x-large;align-items: center"><img src="${flag}" alt="${name}" width="50px" height="40px"><p class="country-name"> ${name}</p></li>`
     )
     .join('');
   refs.list.innerHTML = '';

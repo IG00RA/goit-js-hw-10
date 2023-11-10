@@ -33,6 +33,7 @@ body {
 #search-box {
   font: inherit;
   padding: 8px;
+  padding-left: 9px;
   max-width: 320px;
   margin-bottom: 16px;
 }

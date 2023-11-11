@@ -5,22 +5,40 @@ export function fetchCountries(userInput, renderItem, renderList) {
         if (res.ok) {
             return res.json();
         }
-        return Notify.failure('Oops, there is no country with that name', {
-            position: 'center-top',
-        });
+        throw new Error('Oops, there is no country with that name');
     })
-        .then(data => {
-        if (data) {
-            if (data.length > 10) {
-                return Notify.info('Too many matches found. Please enter a more specific name.', {
-                    position: 'center-top',
-                });
-            }
-            if (data.length === 1) {
-                const language = data.map(d => d.languages.map(language => language.name));
-                return renderItem(data, language);
-            }
+        .then((data) => {
+        if (data.length > 10) {
+            throw new Error('Too many matches found. Please enter a more specific name.');
+        }
+        if (data.length === 1) {
+            const languages = data.map(d => {
+                const languageObj = d.languages;
+                if (typeof languageObj === 'object') {
+                    return Object.values(languageObj).map(lang => {
+                        if (typeof lang === 'string') {
+                            return { name: lang };
+                        }
+                        else {
+                            return lang;
+                        }
+                    });
+                }
+                else {
+                    console.error('Expected languages to be an object');
+                    return [];
+                }
+            });
+            const language = languages.join(', ').split(', ').join(', ');
+            renderItem(data, language);
+        }
+        else {
             renderList(data);
         }
+    })
+        .catch((error) => {
+        Notify.failure(error.message, {
+            position: 'center-top',
+        });
     });
 }
